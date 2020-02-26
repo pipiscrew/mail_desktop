@@ -7,7 +7,7 @@ Today I’m thinking, why not creating a tabbed application that is isolated fro
 
 The application is for **advanced users** as the settings have to described on the **settings.ini** file.
 
-With the help of the CefSharp library common known as .NET bindings for the Chromium Embedded Framework.
+With the help of the [CefSharp](https://github.com/cefsharp/CefSharp/) library common known as .NET bindings for the Chromium Embedded Framework.
 
 ![0](https://user-images.githubusercontent.com/3852762/75326046-95c61180-5882-11ea-8bad-a8948f7a0475.jpg)
 
@@ -21,7 +21,6 @@ Read the included PDF for details, user has to **dowload manualy** the dependenc
 [CefSharp.WinForms](https://www.nuget.org/packages/CefSharp.WinForms/79.1.360)<br> 
 
 
-<br>
 ## This project uses the following 3rd-party dependency :<br>
 -[Cefsharp](https://github.com/cefsharp/CefSharp)<br>
 <br>
