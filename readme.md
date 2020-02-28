@@ -23,7 +23,7 @@ Read the included PDF for details, user has to **dowload manualy** the dependenc
 
 ## This project uses the following 3rd-party dependency :<br>
 -[Cefsharp](https://github.com/cefsharp/CefSharp)<br>
--[MS - VC++ 2015](https://www.microsoft.com/en-us/download/details.aspx?id=52685)
+-[VC++ 2015](https://www.microsoft.com/en-us/download/details.aspx?id=52685)
 <br>
 ## This project is no longer maintained
 Copyright (c) 2020 [PipisCrew](http://pipiscrew.com)
