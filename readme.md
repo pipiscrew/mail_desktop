@@ -21,7 +21,7 @@ Read the included PDF for details, user has to **dowload manualy** the dependenc
 [CefSharp.WinForms](https://www.nuget.org/packages/CefSharp.WinForms/79.1.360)<br> 
 
 
-## This project uses the following 3rd-party dependency :<br>
+## This project uses the following 3rd-party dependencies :<br>
 -[Cefsharp](https://github.com/cefsharp/CefSharp)<br>
 -[VC++ 2015](https://www.microsoft.com/en-us/download/details.aspx?id=52685)
 <br>
