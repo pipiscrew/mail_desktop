@@ -193,6 +193,7 @@ namespace mailbox_desktop
                 tabControl1.TabPages[tabindex].Text = value;
         }
 
+        private long sec_ticks=0; 
         private void StatusUpdated(string value, string icon_filepath)
         {
             if (value == null)
@@ -204,10 +205,23 @@ namespace mailbox_desktop
             else
             {
                 if (icon_filepath != null)
+                {
                     if (File.Exists(Application.StartupPath + "\\" + icon_filepath))
                         trayIcon.Icon = Icon.ExtractAssociatedIcon(Application.StartupPath + "\\" + icon_filepath);
                     else
                         trayIcon.Icon = mailbox_desktop.Properties.Resources.gmail_red;
+                }
+
+                long ticks = DateTime.Now.Ticks;
+
+                //when notification coming on the next 4sec - sound nothing (fix for messenger)
+                if (sec_ticks != 0 && ((ticks - sec_ticks) < 40000000))
+                {
+                    sec_ticks = DateTime.Now.Ticks;
+                    return;
+                }
+                
+                sec_ticks = DateTime.Now.Ticks;
 
                 PlaySound("MailBeep", new System.IntPtr(), PlaySoundFlags.SND_SYSTEM | PlaySoundFlags.SND_NODEFAULT | PlaySoundFlags.SND_ALIAS);
 
