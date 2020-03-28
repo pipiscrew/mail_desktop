@@ -60,7 +60,25 @@ namespace mailbox_desktop
 
             if (commandId == (CefMenuCommand)26504)
             {
-                General.Copy2Clipboard(parameters.LinkUrl);
+                string url = parameters.LinkUrl;
+
+                //try get the real URL from messenger shortcut
+                string url_decoded = System.Net.WebUtility.UrlDecode(url);
+
+                if (url_decoded.Contains("messenger.com/"))
+                {
+                    int start = url_decoded.IndexOf("=");
+                    int end = url_decoded.LastIndexOf("&h=");
+
+                    if (start > 0 && end > 0)
+                    {
+                        start += 1;
+                        url = url_decoded.Substring(start, end - start);
+                    }
+                }
+                //try get the real URL from messenger shortcut
+
+                General.Copy2Clipboard(url);
                 return true;
             }
 
