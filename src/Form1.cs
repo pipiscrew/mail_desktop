@@ -39,6 +39,10 @@ namespace mailbox_desktop
         [return: MarshalAs(UnmanagedType.Bool)]
         internal static extern bool SetForegroundWindow(IntPtr hWnd);
 
+        [DllImport("user32.dll", EntryPoint = "SetWindowPos")]
+        public static extern IntPtr SetWindowPos(IntPtr hWnd, int hWndInsertAfter, int x, int Y, int cx, int cy, int wFlags);
+        public const int SWP_SHOWWINDOW = 0x40;
+        public const int SWP_NOSIZE = 0x1;
         #endregion
 
         internal string agent_safari = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36 Edge/15.15063";
@@ -67,6 +71,7 @@ namespace mailbox_desktop
                 parser.AddSetting("url0", "cookies_jar", "gmail342342D");
                 parser.AddSetting("url0", "notification_keyword", "(");
                 parser.AddSetting("url0", "notification_icon", "");
+                parser.AddSetting("url0", "notification_show_window", "0");
                 parser.AddSetting("url0", "no_at_startup", "0");
 
                 parser.AddSetting("cookies", "exclude", "google;messenger;linkedin");
@@ -101,7 +106,7 @@ namespace mailbox_desktop
             //enumerate ini - max acceptable 10 entries
             for (int i = 0; i < 10; i++)
             {
-                if (parser.EnumSection("url" + i).Length == 6)
+                if (parser.EnumSection("url" + i).Length == 7)
                 {
                     parse_url_item(parser, i.ToString(), agent, enableWebRTC, true);
                 }
@@ -139,11 +144,12 @@ namespace mailbox_desktop
             string notification_icon = parser.GetSetting("url" + url_no, "notification_icon");
             string title = parser.GetSetting("url" + url_no, "title");
             string no_at_startup = parser.GetSetting("url" + url_no, "no_at_startup");
+            string notification_show_window = parser.GetSetting("url" + url_no, "notification_show_window");
 
             //create instance of CefSharp + add new tab [start]
             if (no_at_startup == "0" || !add2toolstrip)
             {
-                add_tab(title, cookies_jar, url, agent, enableWebRTC, notification_keyword, notification_icon);
+                add_tab(title, cookies_jar, url, agent, enableWebRTC, notification_keyword, notification_icon, notification_show_window);
             }
             //create instance of CefSharp + add new tab [end]
 
@@ -160,12 +166,12 @@ namespace mailbox_desktop
 
         }
 
-        private void add_tab(string title, string cookies_jar, string url, string agent, string enableWebRTC, string notification_keyword, string notification_icon)
+        private void add_tab(string title, string cookies_jar, string url, string agent, string enableWebRTC, string notification_keyword, string notification_icon, string notification_show_window)
         {
             TabPage tp = new TabPage(title);
             tabControl1.TabPages.Add(tp);
 
-            CefControl1 x = new CefControl1(tabControl1.TabPages.Count - 1, cookies_jar, url, agent, enableWebRTC, notification_keyword, notification_icon);
+            CefControl1 x = new CefControl1(tabControl1.TabPages.Count - 1, cookies_jar, url, agent, enableWebRTC, notification_keyword, notification_icon, notification_show_window);
             x.StatusChanged += new CefControl1.status_changed(StatusUpdated);
             x.TabText += new CefControl1.tab_text(TabText);
             x.OpenChild += new CefControl1.open_child(OpenChildTab);
@@ -194,7 +200,7 @@ namespace mailbox_desktop
         }
 
         private long sec_ticks=0; 
-        private void StatusUpdated(string value, string icon_filepath)
+        private void StatusUpdated(string value, string icon_filepath, string notification_show_window)
         {
             if (value == null)
             {
@@ -226,6 +232,15 @@ namespace mailbox_desktop
                 PlaySound("MailBeep", new System.IntPtr(), PlaySoundFlags.SND_SYSTEM | PlaySoundFlags.SND_NODEFAULT | PlaySoundFlags.SND_ALIAS);
 
                 trayIcon.Text = value;
+                if (notification_show_window == "1")
+                {
+                    this.Show();
+                    this.WindowState = FormWindowState.Normal;
+
+                    int x = (Screen.PrimaryScreen.WorkingArea.Width - this.Width) / 2;
+                    int y = (Screen.PrimaryScreen.WorkingArea.Height - this.Height) / 2;
+                    SetWindowPos(this.Handle, 0, x, y, 0, 0, SWP_SHOWWINDOW | SWP_NOSIZE);
+                }
             }
 
 
@@ -240,7 +255,7 @@ namespace mailbox_desktop
                 return;
             }
 
-            add_tab("child", use_the_same_cookies ? cache_dir : "", url, "", "", "", "");
+            add_tab("child", use_the_same_cookies ? cache_dir : "", url, "", "", "", "", "");
 
         }
         #endregion
@@ -303,6 +318,13 @@ namespace mailbox_desktop
                 e.Cancel = true;
                 hide2tray();
             }
+            else
+            {
+                for (int i = 0; i < tabControl1.TabPages.Count-1; i++)
+                {
+                    tabControl1.TabPages[i].Dispose();
+                }
+            }
         }
 
         private void show_form()
@@ -338,6 +360,7 @@ namespace mailbox_desktop
 
         private void toolStripMenuItem3_Click(object sender, EventArgs e)
         {
+            trayIcon.Text = "PipisCrew mail desktop";
             trayIcon.Icon = mailbox_desktop.Properties.Resources.gmail_blue;
         }
 
@@ -359,12 +382,12 @@ namespace mailbox_desktop
 
         private void toolstripOpenChildWebRTC_Clicked(object sender, EventArgs e)
         {
-            add_tab("test WebRTC", "", "https://test.webrtc.org/", "", "", "", "");
+            add_tab("test WebRTC", "", "https://test.webrtc.org/", "", "", "", "", "");
         }
 
         private void toolstripOpenChildTestAgent_Clicked(object sender, EventArgs e)
         {
-            add_tab("test Agent", "", "https://www.whatismybrowser.com/detect/what-is-my-user-agent", "", "", "", "");
+            add_tab("test Agent", "", "https://www.whatismybrowser.com/detect/what-is-my-user-agent", "", "", "", "", "");
         }
 
         internal string clipboard_url = null;
@@ -457,12 +480,12 @@ namespace mailbox_desktop
             CefControl1 user_ctl = (CefControl1)tabControl1.SelectedTab.Controls[0];
             string cookies_jar = user_ctl.get_cache_name();
 
-            add_tab("child", cookies_jar, clipboard_url, "", "", "", "");
+            add_tab("child", cookies_jar, clipboard_url, "", "", "", "", "");
         }
 
         private void toolStripOpenInGlobal_Click(object sender, EventArgs e)
         {
-            add_tab("child", "", clipboard_url, "", "", "", "");
+            add_tab("child", "", clipboard_url, "", "", "", "", "");
         }
 
         #endregion

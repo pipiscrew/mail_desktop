@@ -15,7 +15,7 @@ namespace mailbox_desktop
         private readonly ChromiumWebBrowser chrome;
 
         //event - status changed
-        public delegate void status_changed(string value, string icon_filepath);
+        public delegate void status_changed(string value, string icon_filepath, string notification_show_window);
         public event status_changed StatusChanged;
 
         //event - tab text
@@ -29,6 +29,7 @@ namespace mailbox_desktop
         private string notification_keyword = null;
         private string icon_filepath = null;
         private int tabindex = -1;
+        private string notification_show_window = "0";
 
         private string cache_dir;
 
@@ -37,13 +38,14 @@ namespace mailbox_desktop
             InitializeComponent();
         }
 
-        public CefControl1(int tabindex, string cache_dir, string url, string agent, string enableWebRTC, string notification_keyword, string notification_icon)
+        public CefControl1(int tabindex, string cache_dir, string url, string agent, string enableWebRTC, string notification_keyword, string notification_icon, string notification_show_window)
         {
             InitializeComponent();
 
             this.icon_filepath = notification_icon;
             this.tabindex = tabindex;
             this.cache_dir = cache_dir;
+            this.notification_show_window = notification_show_window;
 
             cache_dir = Application.StartupPath + "\\cache\\" + cache_dir;
             this.notification_keyword = notification_keyword.ToLower();
@@ -126,7 +128,7 @@ namespace mailbox_desktop
             if (!string.IsNullOrEmpty(notification_keyword) && newtitle.ToLower().Contains(notification_keyword)) //(Regex.IsMatch(e.Title, pattern)) //(e.Title.Contains("("))
             {
                 if (StatusChanged != null)
-                    StatusChanged(newtitle, icon_filepath);
+                    StatusChanged(newtitle, icon_filepath, notification_show_window);
             }
 
             if (TabText != null)
