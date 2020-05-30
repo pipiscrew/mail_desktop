@@ -28,6 +28,7 @@ namespace mailbox_desktop
 
                 model.AddItem((CefMenuCommand)26502, "Open in new tab w/ cookies");
                 model.AddItem((CefMenuCommand)26503, "Open in new tab");
+                model.AddItem((CefMenuCommand)26505, "Open in default browser");
                 //model.SetCommandIdAt(0, (CefMenuCommand)26502); not working?
 
                 model.AddSeparator();
@@ -83,13 +84,20 @@ namespace mailbox_desktop
             }
 
             // React to the second ID (show dev tools method)
-            if (commandId == (CefMenuCommand)26502 || commandId == (CefMenuCommand)26503)
+            if (commandId == (CefMenuCommand)26502 || commandId == (CefMenuCommand)26503 || commandId == (CefMenuCommand)26505)
             {
                 if (!string.IsNullOrEmpty(parameters.LinkUrl) && parameters.LinkUrl.ToLower().StartsWith("http"))
                 {
-                    ChromiumWebBrowser current_browser = (ChromiumWebBrowser)browserControl;
-                    CefControl1 current_CEF_comtrol = (CefControl1)current_browser.Parent;
-                    current_CEF_comtrol.open_child_tab(parameters.LinkUrl, commandId == (CefMenuCommand)26502);
+                    if (commandId == (CefMenuCommand)26505)
+                    {
+                        System.Diagnostics.Process.Start(parameters.LinkUrl);
+                    }
+                    else
+                    {
+                        ChromiumWebBrowser current_browser = (ChromiumWebBrowser)browserControl;
+                        CefControl1 current_CEF_comtrol = (CefControl1)current_browser.Parent;
+                        current_CEF_comtrol.open_child_tab(parameters.LinkUrl, commandId == (CefMenuCommand)26502);
+                    }
                 }
                 //browser.GetHost().CloseDevTools();
                 return true;
