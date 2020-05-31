@@ -61,23 +61,7 @@ namespace mailbox_desktop
 
             if (commandId == (CefMenuCommand)26504)
             {
-                string url = parameters.LinkUrl;
-
-                //try get the real URL from messenger shortcut
-                string url_decoded = System.Net.WebUtility.UrlDecode(url);
-
-                if (url_decoded.Contains("messenger.com/"))
-                {
-                    int start = url_decoded.IndexOf("=");
-                    int end = url_decoded.LastIndexOf("&h=");
-
-                    if (start > 0 && end > 0)
-                    {
-                        start += 1;
-                        url = url_decoded.Substring(start, end - start);
-                    }
-                }
-                //try get the real URL from messenger shortcut
+                string url = clean_url(parameters.LinkUrl);
 
                 General.Copy2Clipboard(url);
                 return true;
@@ -90,7 +74,7 @@ namespace mailbox_desktop
                 {
                     if (commandId == (CefMenuCommand)26505)
                     {
-                        System.Diagnostics.Process.Start(parameters.LinkUrl);
+                        System.Diagnostics.Process.Start(clean_url(parameters.LinkUrl));
                     }
                     else
                     {
@@ -103,6 +87,26 @@ namespace mailbox_desktop
                 return true;
             }
             return false;
+        }
+
+        //try get the real URL from messenger shortcut
+        internal string clean_url(string url){
+           
+            string url_decoded = System.Net.WebUtility.UrlDecode(url);
+
+            if (url_decoded.Contains("messenger.com/"))
+            {
+                int start = url_decoded.IndexOf("=");
+                int end = url_decoded.LastIndexOf("&h=");
+
+                if (start > 0 && end > 0)
+                {
+                    start += 1;
+                    url = url_decoded.Substring(start, end - start);
+                }
+            }
+
+            return url;
         }
 
         public void OnContextMenuDismissed(IWebBrowser browserControl, IBrowser browser, IFrame frame)
