@@ -15,7 +15,7 @@ With the help of the [CefSharp](https://github.com/cefsharp/CefSharp/) library c
 
 <br>
 
-Read the included PDF for details, user has to **dowload manualy** the dependencies from the following **nuget links** : <br>
+Read the included PDF for details, user has to **dowload manually** the dependencies from the following **nuget links** : <br>
 [cef.redist.x64](https://www.nuget.org/packages/cef.redist.x64/79.1.36)<br> 
 [CefSharp.Common](https://www.nuget.org/packages/CefSharp.Common/79.1.360)<br> 
 [CefSharp.WinForms](https://www.nuget.org/packages/CefSharp.WinForms/79.1.360)<br> 
