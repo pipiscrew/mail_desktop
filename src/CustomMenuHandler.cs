@@ -17,7 +17,7 @@ namespace mailbox_desktop
 
             // Add a new item to the list using the AddItem method of the model
 
-            if (!string.IsNullOrEmpty(parameters.LinkUrl) && parameters.LinkUrl.ToLower().StartsWith("http"))
+            if (!string.IsNullOrEmpty(parameters.LinkUrl) && parameters.LinkUrl.StartsWith("http",StringComparison.OrdinalIgnoreCase))
             {
                 model.AddItem((CefMenuCommand)26504, "Copy link address");
 
@@ -70,7 +70,7 @@ namespace mailbox_desktop
             // React to the second ID (show dev tools method)
             if (commandId == (CefMenuCommand)26502 || commandId == (CefMenuCommand)26503 || commandId == (CefMenuCommand)26505)
             {
-                if (!string.IsNullOrEmpty(parameters.LinkUrl) && parameters.LinkUrl.ToLower().StartsWith("http"))
+                if (!string.IsNullOrEmpty(parameters.LinkUrl) && parameters.LinkUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                 {
                     if (commandId == (CefMenuCommand)26505)
                     {

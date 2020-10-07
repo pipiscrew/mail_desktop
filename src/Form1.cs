@@ -138,7 +138,7 @@ namespace mailbox_desktop
 
         private void parse_url_item(iniParser parser, string url_no, string agent, string enableWebRTC, bool add2toolstrip)
         {
-            string url = parser.GetSetting("url" + url_no, "url").ToLower();
+            string url = parser.GetSetting("url" + url_no, "url");
             string cookies_jar = parser.GetSetting("url" + url_no, "cookies_jar");
             string notification_keyword = parser.GetSetting("url" + url_no, "notification_keyword");
             string notification_icon = parser.GetSetting("url" + url_no, "notification_icon");
@@ -395,9 +395,9 @@ namespace mailbox_desktop
         {
             if (e.Button == MouseButtons.Right)
             {
-                string g = General.GetFromClipboard().ToLower();
+                string g = General.GetFromClipboard();
 
-                if (g.StartsWith("http"))
+                if (g.StartsWith("http", StringComparison.OrdinalIgnoreCase))
                 {
                     clipboard_url = g;
                     toolStripOpenInContainer.Visible = toolStripOpenInGlobal.Visible = toolStripSeparator3.Visible = true;
