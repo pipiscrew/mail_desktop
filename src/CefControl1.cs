@@ -59,6 +59,13 @@ namespace mailbox_desktop
                 settings.RootCachePath = Application.StartupPath + "\\cache\\";
                 settings.CachePath = cache_dir;
                 settings.PersistSessionCookies = true;
+                settings.CefCommandLineArgs.Add("no-proxy-server");
+                //fake GPU details - https://stackoverflow.com/questions/55955203/how-to-give-fake-gpu-info-to-site
+                //test with https://browserleaks.com/canvas
+                settings.CefCommandLineArgs.Add("disable-reading-from-canvas");
+                settings.CefCommandLineArgs.Add("disable-gpu");
+                settings.CefCommandLineArgs.Add("disable-webgl");
+
 
                 if (enableWebRTC == "1")
                     settings.CefCommandLineArgs.Add("enable-media-stream", "1");
