@@ -132,6 +132,13 @@ namespace mailbox_desktop
             toolStripOpen.DropDownItems.Add(ts);
             ts.Click += new System.EventHandler(toolstripOpenChildTestAgent_Clicked);
 
+            //add Agent
+            ts = new ToolStripMenuItem();
+            ts.Tag = "FingerPrint";
+            ts.Text = "test fingerprint";
+            toolStripOpen.DropDownItems.Add(ts);
+            ts.Click += new System.EventHandler(toolstripOpenChildTestFingerPrint_Clicked);
+
         }
 
 
@@ -388,6 +395,11 @@ namespace mailbox_desktop
         private void toolstripOpenChildTestAgent_Clicked(object sender, EventArgs e)
         {
             add_tab("test Agent", "", "https://www.whatismybrowser.com/detect/what-is-my-user-agent", "", "", "", "", "");
+        }
+
+        private void toolstripOpenChildTestFingerPrint_Clicked(object sender, EventArgs e)
+        {
+            add_tab("test FingerPrint", "", "https://browserleaks.com/canvas", "", "", "", "", "");
         }
 
         internal string clipboard_url = null;
