@@ -38,7 +38,7 @@ namespace mailbox_desktop
             InitializeComponent();
         }
 
-        public CefControl1(int tabindex, string cache_dir, string url, string agent, string enableWebRTC, string notification_keyword, string notification_icon, string notification_show_window)
+        public CefControl1(int tabindex, string cache_dir, string url, GeneralSettings gSettings, string notification_keyword, string notification_icon, string notification_show_window)
         {
             InitializeComponent();
 
@@ -55,19 +55,27 @@ namespace mailbox_desktop
             if (!Cef.IsInitialized)
             {
                 CefSettings settings = new CefSettings();
-                settings.UserAgent = agent;
+                settings.UserAgent = gSettings.agent;
                 settings.RootCachePath = Application.StartupPath + "\\cache\\";
                 settings.CachePath = cache_dir;
                 settings.PersistSessionCookies = true;
-                settings.CefCommandLineArgs.Add("no-proxy-server");
+
                 //fake GPU details - https://stackoverflow.com/questions/55955203/how-to-give-fake-gpu-info-to-site
                 //test with https://browserleaks.com/canvas
-                settings.CefCommandLineArgs.Add("disable-reading-from-canvas");
-                settings.CefCommandLineArgs.Add("disable-gpu");
-                settings.CefCommandLineArgs.Add("disable-webgl");
+                if (gSettings.noproxyserver == "1")
+                    settings.CefCommandLineArgs.Add("no-proxy-server");
+
+                if (gSettings.disablecanvas == "1")
+                    settings.CefCommandLineArgs.Add("disable-reading-from-canvas");
+
+                if (gSettings.disablegpu == "1")
+                    settings.CefCommandLineArgs.Add("disable-gpu");
+
+                if (gSettings.disablewebgl == "1")
+                    settings.CefCommandLineArgs.Add("disable-webgl");
 
 
-                if (enableWebRTC == "1")
+                if (gSettings.enableWebRTC == "1")
                     settings.CefCommandLineArgs.Add("enable-media-stream", "1");
 
                 //test @

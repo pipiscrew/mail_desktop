@@ -7,8 +7,22 @@ using System.Collections.Generic;
 
 namespace mailbox_desktop
 {
+    public class GeneralSettings
+    {
+        public string enableWebRTC { get; set; }
+        public string agent { get; set; }
+        public string noproxyserver { get; set; }
+        public string disablecanvas { get; set; }
+        public string disablegpu { get; set; }
+        public string disablewebgl { get; set; }
+
+        public GeneralSettings(){
+        }
+    }
+
     public partial class Form1 : Form
     {
+        GeneralSettings settings = new GeneralSettings();
 
         #region " APIS "
         //
@@ -63,8 +77,14 @@ namespace mailbox_desktop
 
             if (!File.Exists(Application.StartupPath + "\\settings.ini"))
             {
+
                 parser.AddSetting("general", "enableWebRTC", "1");
                 parser.AddSetting("general", "agent", agent_safari);
+                parser.AddSetting("general", "noproxyserver", "1");
+                parser.AddSetting("general", "disablecanvas", "1");
+                parser.AddSetting("general", "disablegpu", "1");
+                parser.AddSetting("general", "disablewebgl", "1");
+
 
                 parser.AddSetting("url0", "url", "https://mail.google.com/mail/u/0/#inbox");
                 parser.AddSetting("url0", "title", "gmail");
@@ -74,7 +94,7 @@ namespace mailbox_desktop
                 parser.AddSetting("url0", "notification_show_window", "0");
                 parser.AddSetting("url0", "no_at_startup", "0");
 
-                parser.AddSetting("cookies", "exclude", "google;messenger;linkedin");
+                parser.AddSetting("cookies", "exclude", "google;messenger;linkedin;yahoo");
                 parser.SaveSettings();
 
                 MessageBox.Show(Application.StartupPath + "\\settings.ini\r\n created, adjust the settings and reload the application.");
@@ -85,20 +105,29 @@ namespace mailbox_desktop
             //ToolStripMenuItem ts;
 
             //GENERAL
-            string enableWebRTC = parser.GetSetting("general", "enableWebRTC");
-            string agent = parser.GetSetting("general", "agent");
+            settings.enableWebRTC = parser.GetSetting("general", "enableWebRTC");
+            settings.agent = parser.GetSetting("general", "agent");
+
+            // Don't use a proxy server, always make direct connections. Overrides any other proxy server flags that are passed.
+            // Slightly improves Cef initialize time as it won't attempt to resolve a proxy https://github.com/cefsharp/CefSharp/wiki/General-Usage#proxy-resolution
+            settings.noproxyserver = parser.GetSetting("general", "noproxyserver");
+
+            //fingerprints
+            settings.disablecanvas = parser.GetSetting("general", "disablecanvas");
+            settings.disablegpu = parser.GetSetting("general", "disablegpu");
+            settings.disablewebgl = parser.GetSetting("general", "disablewebgl");
 
             //tray options
             ToolStripMenuItem ts = null;
             ts = new ToolStripMenuItem();
-            ts.Tag = ((enableWebRTC == "1") ? "0" : "1");
-            ts.Text = ((enableWebRTC == "1") ? "disabled WebRTC" : "enabled WebRTC");
+            ts.Tag = ((settings.enableWebRTC == "1") ? "0" : "1");
+            ts.Text = ((settings.enableWebRTC == "1") ? "disabled WebRTC" : "enabled WebRTC");
             toolStripRestart.DropDownItems.Add(ts);
             ts.Click += new System.EventHandler(toolstripRestartWebRTC_Clicked);
 
             ts = new ToolStripMenuItem();
-            ts.Tag = (agent.ToLower().Contains(") s") ? "c" : "s");
-            ts.Text = (agent.ToLower().Contains(") s") ? "agent chrome" : "agent safari");
+            ts.Tag = (settings.agent.ToLower().Contains(") s") ? "c" : "s");
+            ts.Text = (settings.agent.ToLower().Contains(") s") ? "agent chrome" : "agent safari");
             toolStripRestart.DropDownItems.Add(ts);
             ts.Click += new System.EventHandler(toolstripRestartAgent_Clicked);
 
@@ -108,7 +137,7 @@ namespace mailbox_desktop
             {
                 if (parser.EnumSection("url" + i).Length == 7)
                 {
-                    parse_url_item(parser, i.ToString(), agent, enableWebRTC, true);
+                    parse_url_item(parser, i.ToString(), true);
                 }
 
                 tabControl1.SelectedIndex = 0;
@@ -143,7 +172,7 @@ namespace mailbox_desktop
 
 
 
-        private void parse_url_item(iniParser parser, string url_no, string agent, string enableWebRTC, bool add2toolstrip)
+        private void parse_url_item(iniParser parser, string url_no, bool add2toolstrip)
         {
             string url = parser.GetSetting("url" + url_no, "url");
             string cookies_jar = parser.GetSetting("url" + url_no, "cookies_jar");
@@ -156,7 +185,7 @@ namespace mailbox_desktop
             //create instance of CefSharp + add new tab [start]
             if (no_at_startup == "0" || !add2toolstrip)
             {
-                add_tab(title, cookies_jar, url, agent, enableWebRTC, notification_keyword, notification_icon, notification_show_window);
+                add_tab(title, cookies_jar, url, notification_keyword, notification_icon, notification_show_window);
             }
             //create instance of CefSharp + add new tab [end]
 
@@ -173,12 +202,12 @@ namespace mailbox_desktop
 
         }
 
-        private void add_tab(string title, string cookies_jar, string url, string agent, string enableWebRTC, string notification_keyword, string notification_icon, string notification_show_window)
+        private void add_tab(string title, string cookies_jar, string url, string notification_keyword, string notification_icon, string notification_show_window)
         {
             TabPage tp = new TabPage(title);
             tabControl1.TabPages.Add(tp);
 
-            CefControl1 x = new CefControl1(tabControl1.TabPages.Count - 1, cookies_jar, url, agent, enableWebRTC, notification_keyword, notification_icon, notification_show_window);
+            CefControl1 x = new CefControl1(tabControl1.TabPages.Count - 1, cookies_jar, url, settings, notification_keyword, notification_icon, notification_show_window);
             x.StatusChanged += new CefControl1.status_changed(StatusUpdated);
             x.TabText += new CefControl1.tab_text(TabText);
             x.OpenChild += new CefControl1.open_child(OpenChildTab);
@@ -262,7 +291,7 @@ namespace mailbox_desktop
                 return;
             }
 
-            add_tab("child", use_the_same_cookies ? cache_dir : "", url, "", "", "", "", "");
+            add_tab("child", use_the_same_cookies ? cache_dir : "", url, "", "", "");
 
         }
         #endregion
@@ -380,26 +409,25 @@ namespace mailbox_desktop
         {
             ToolStripMenuItem tmp = (sender as ToolStripMenuItem);
             string item_no = tmp.Tag.ToString();
-            iniParser parser = new iniParser(Application.StartupPath + "\\settings.ini");
-            string enableWebRTC = parser.GetSetting("general", "enableWebRTC");
-            string agent = parser.GetSetting("general", "agent");
 
-            parse_url_item(parser, item_no, agent, enableWebRTC, false);
+            iniParser parser = new iniParser(Application.StartupPath + "\\settings.ini");
+ 
+            parse_url_item(parser, item_no, false);
         }
 
         private void toolstripOpenChildWebRTC_Clicked(object sender, EventArgs e)
         {
-            add_tab("test WebRTC", "", "https://test.webrtc.org/", "", "", "", "", "");
+            add_tab("test WebRTC", "", "https://test.webrtc.org/", "", "", "");
         }
 
         private void toolstripOpenChildTestAgent_Clicked(object sender, EventArgs e)
         {
-            add_tab("test Agent", "", "https://www.whatismybrowser.com/detect/what-is-my-user-agent", "", "", "", "", "");
+            add_tab("test Agent", "", "https://www.whatismybrowser.com/detect/what-is-my-user-agent", "", "", "");
         }
 
         private void toolstripOpenChildTestFingerPrint_Clicked(object sender, EventArgs e)
         {
-            add_tab("test FingerPrint", "", "https://browserleaks.com/canvas", "", "", "", "", "");
+            add_tab("test FingerPrint", "", "https://browserleaks.com/canvas", "", "", "");
         }
 
         internal string clipboard_url = null;
@@ -492,12 +520,12 @@ namespace mailbox_desktop
             CefControl1 user_ctl = (CefControl1)tabControl1.SelectedTab.Controls[0];
             string cookies_jar = user_ctl.get_cache_name();
 
-            add_tab("child", cookies_jar, clipboard_url, "", "", "", "", "");
+            add_tab("child", cookies_jar, clipboard_url, "", "", "");
         }
 
         private void toolStripOpenInGlobal_Click(object sender, EventArgs e)
         {
-            add_tab("child", "", clipboard_url, "", "", "", "", "");
+            add_tab("child", "", clipboard_url, "", "", "");
         }
 
         #endregion
