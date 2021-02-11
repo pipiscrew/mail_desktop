@@ -74,7 +74,10 @@ namespace mailbox_desktop
                 {
                     if (commandId == (CefMenuCommand)26505)
                     {
-                        System.Diagnostics.Process.Start(clean_url(parameters.LinkUrl));
+                        //System.Diagnostics.Process.Start(clean_url(parameters.LinkUrl));
+                        ChromiumWebBrowser current_browser = (ChromiumWebBrowser)browserControl;
+                        CefControl1 current_CEF_comtrol = (CefControl1)current_browser.Parent;
+                        current_CEF_comtrol.open_to_browser(clean_url(parameters.LinkUrl));
                     }
                     else
                     {
@@ -87,26 +90,6 @@ namespace mailbox_desktop
                 return true;
             }
             return false;
-        }
-
-        //try get the real URL from messenger shortcut
-        internal string clean_url(string url){
-           
-            string url_decoded = System.Net.WebUtility.UrlDecode(url);
-
-            if (url_decoded.Contains("messenger.com/"))
-            {
-                int start = url_decoded.IndexOf("=");
-                int end = url_decoded.LastIndexOf("&h=");
-
-                if (start > 0 && end > 0)
-                {
-                    start += 1;
-                    url = url_decoded.Substring(start, end - start);
-                }
-            }
-
-            return url;
         }
 
         public void OnContextMenuDismissed(IWebBrowser browserControl, IBrowser browser, IFrame frame)
@@ -142,6 +125,27 @@ namespace mailbox_desktop
             public void Dispose()
             {
             }
+        }
+
+        //try get the real URL from messenger shortcut
+        internal string clean_url(string url)
+        {
+
+            string url_decoded = System.Net.WebUtility.UrlDecode(url);
+
+            if (url_decoded.Contains("messenger.com/"))
+            {
+                int start = url_decoded.IndexOf("=");
+                int end = url_decoded.LastIndexOf("&h=");
+
+                if (start > 0 && end > 0)
+                {
+                    start += 1;
+                    url = url_decoded.Substring(start, end - start);
+                }
+            }
+
+            return url;
         }
     }
 }

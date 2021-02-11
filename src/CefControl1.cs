@@ -32,6 +32,7 @@ namespace mailbox_desktop
         private string notification_show_window = "0";
 
         private string cache_dir;
+        private string externalbrowser;
 
         public CefControl1()
         {
@@ -46,6 +47,7 @@ namespace mailbox_desktop
             this.tabindex = tabindex;
             this.cache_dir = cache_dir;
             this.notification_show_window = notification_show_window;
+            this.externalbrowser = gSettings.externalbrowser;
 
             cache_dir = Application.StartupPath + "\\cache\\" + cache_dir;
             this.notification_keyword = notification_keyword.ToLower();
@@ -220,6 +222,15 @@ namespace mailbox_desktop
             if (OpenChild != null)
                 OpenChild(url, this.cache_dir, use_the_same_cookies);
 
+        }
+
+        // called by CustomMenuHandler
+        public void open_to_browser(string url)
+        {
+            if (string.IsNullOrEmpty(this.externalbrowser))
+                System.Diagnostics.Process.Start(url);
+            else
+                System.Diagnostics.Process.Start(this.externalbrowser, url);
         }
 
         class CookieMonster : ICookieVisitor

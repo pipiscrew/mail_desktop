@@ -5,7 +5,6 @@ namespace mailbox_desktop
 {
     public static class General
     {
-
         public static void Copy2Clipboard(string val)
         {
             try

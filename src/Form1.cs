@@ -15,6 +15,7 @@ namespace mailbox_desktop
         public string disablecanvas { get; set; }
         public string disablegpu { get; set; }
         public string disablewebgl { get; set; }
+        public string externalbrowser { get; set; }
 
         public GeneralSettings(){
         }
@@ -84,6 +85,7 @@ namespace mailbox_desktop
                 parser.AddSetting("general", "disablecanvas", "1");
                 parser.AddSetting("general", "disablegpu", "1");
                 parser.AddSetting("general", "disablewebgl", "1");
+                parser.AddSetting("general", "externalbrowser", "");
 
 
                 parser.AddSetting("url0", "url", "https://mail.google.com/mail/u/0/#inbox");
@@ -105,6 +107,7 @@ namespace mailbox_desktop
             //ToolStripMenuItem ts;
 
             //GENERAL
+            settings.externalbrowser = parser.GetSetting("general", "externalbrowser");
             settings.enableWebRTC = parser.GetSetting("general", "enableWebRTC");
             settings.agent = parser.GetSetting("general", "agent");
 
