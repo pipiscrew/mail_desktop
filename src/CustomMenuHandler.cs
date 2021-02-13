@@ -144,8 +144,9 @@ namespace mailbox_desktop
                     url = url_decoded.Substring(start, end - start);
                 }
             }
-
-            return url;
+            
+            //fix official messenger bug, provide links with messenger.com while is facebook.com
+            return url.Replace("//www.messenger.com", "//www.facebook.com");
         }
     }
 }
