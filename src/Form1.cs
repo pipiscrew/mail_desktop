@@ -7,20 +7,6 @@ using System.Collections.Generic;
 
 namespace mailbox_desktop
 {
-    public class GeneralSettings
-    {
-        public string enableWebRTC { get; set; }
-        public string agent { get; set; }
-        public string noproxyserver { get; set; }
-        public string disablecanvas { get; set; }
-        public string disablegpu { get; set; }
-        public string disablewebgl { get; set; }
-        public string externalbrowser { get; set; }
-
-        public GeneralSettings(){
-        }
-    }
-
     public partial class Form1 : Form
     {
         GeneralSettings settings = new GeneralSettings();
@@ -60,7 +46,11 @@ namespace mailbox_desktop
         public const int SWP_NOSIZE = 0x1;
         #endregion
 
-        internal string agent_safari = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36 Edge/15.15063";
+        //safari - decrecated by google
+        //internal string agent_alternative = "Mozilla/5.0 (Windows NT 10.0; Win64; x64) AppleWebKit/537.36 (KHTML, like Gecko) Safari/537.36 Edge/15.15063";
+
+        //Firefox
+        internal string agent_alternative = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0";
 
         public Form1()
         {
@@ -80,7 +70,7 @@ namespace mailbox_desktop
             {
 
                 parser.AddSetting("general", "enableWebRTC", "1");
-                parser.AddSetting("general", "agent", agent_safari);
+                parser.AddSetting("general", "agent", agent_alternative);
                 parser.AddSetting("general", "noproxyserver", "1");
                 parser.AddSetting("general", "disablecanvas", "1");
                 parser.AddSetting("general", "disablegpu", "1");
@@ -129,8 +119,8 @@ namespace mailbox_desktop
             ts.Click += new System.EventHandler(toolstripRestartWebRTC_Clicked);
 
             ts = new ToolStripMenuItem();
-            ts.Tag = (settings.agent.ToLower().Contains(") s") ? "c" : "s");
-            ts.Text = (settings.agent.ToLower().Contains(") s") ? "agent chrome" : "agent safari");
+            ts.Tag = (settings.agent.Equals(agent_alternative) ? "c" : "s");
+            ts.Text = (settings.agent.Equals(agent_alternative) ? "agent chrome" : "agent alternative");
             toolStripRestart.DropDownItems.Add(ts);
             ts.Click += new System.EventHandler(toolstripRestartAgent_Clicked);
 
@@ -324,7 +314,7 @@ namespace mailbox_desktop
             if (agent_new_value == "c")
                 agent_new_value = "";
             else
-                agent_new_value = agent_safari;
+                agent_new_value = agent_alternative;
 
             iniParser parser = new iniParser(Application.StartupPath + "\\settings.ini");
             parser.AddSetting("general", "agent", agent_new_value);
@@ -548,6 +538,21 @@ namespace mailbox_desktop
             {
                 SetProcessWorkingSetSize(System.Diagnostics.Process.GetCurrentProcess().Handle, -1, -1);
             }
+        }
+    }
+
+    public class GeneralSettings
+    {
+        public string enableWebRTC { get; set; }
+        public string agent { get; set; }
+        public string noproxyserver { get; set; }
+        public string disablecanvas { get; set; }
+        public string disablegpu { get; set; }
+        public string disablewebgl { get; set; }
+        public string externalbrowser { get; set; }
+
+        public GeneralSettings()
+        {
         }
     }
 }
