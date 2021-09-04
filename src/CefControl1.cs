@@ -15,7 +15,7 @@ namespace mailbox_desktop
         private readonly ChromiumWebBrowser chrome;
 
         //event - status changed
-        public delegate void status_changed(string value, string icon_filepath, string notification_show_window);
+        public delegate void status_changed(string value, string icon_filepath, bool notification_show_window);
         public event status_changed StatusChanged;
 
         //event - tab text
@@ -29,7 +29,7 @@ namespace mailbox_desktop
         private string notification_keyword = null;
         private string icon_filepath = null;
         private int tabindex = -1;
-        private string notification_show_window = "0";
+        private bool notification_show_window =false;
 
         private string cache_dir;
         private string externalbrowser;
@@ -39,45 +39,46 @@ namespace mailbox_desktop
             InitializeComponent();
         }
 
-        public CefControl1(int tabindex, string cache_dir, string url, GeneralSettings gSettings, string notification_keyword, string notification_icon, string notification_show_window)
+        //public CefControl1(int tabindex, string cache_dir, string url, GeneralSettings gSettings, string notification_keyword, string notification_icon, bool notification_show_window)
+        public CefControl1(int tabindex, GeneralSettings gSettings, WebsiteDetail w)
         {
             InitializeComponent();
 
-            this.icon_filepath = notification_icon;
+            this.icon_filepath = w.notificationIcon;
             this.tabindex = tabindex;
-            this.cache_dir = cache_dir;
-            this.notification_show_window = notification_show_window;
+            this.cache_dir = w.cookiesJar;
+            this.notification_show_window = w.notificationShowWindow;
             this.externalbrowser = gSettings.externalbrowser;
 
-            cache_dir = Application.StartupPath + "\\cache\\" + cache_dir;
-            this.notification_keyword = notification_keyword.ToLower();
+            string cache_dir_local = Application.StartupPath + "\\cache\\" + cache_dir;
+            this.notification_keyword = w.notificationKeyword.ToLower();
 
-            Directory.CreateDirectory(cache_dir);
+            Directory.CreateDirectory(cache_dir_local);
 
             if (!Cef.IsInitialized)
             {
                 CefSettings settings = new CefSettings();
                 settings.UserAgent = gSettings.agent;
                 settings.RootCachePath = Application.StartupPath + "\\cache\\";
-                settings.CachePath = cache_dir;
+                settings.CachePath = cache_dir_local;
                 settings.PersistSessionCookies = true;
 
                 //fake GPU details - https://stackoverflow.com/questions/55955203/how-to-give-fake-gpu-info-to-site
                 //test with https://browserleaks.com/canvas
-                if (gSettings.noproxyserver == "1")
+                if (gSettings.noproxyserver)
                     settings.CefCommandLineArgs.Add("no-proxy-server");
 
-                if (gSettings.disablecanvas == "1")
+                if (gSettings.disablecanvas)
                     settings.CefCommandLineArgs.Add("disable-reading-from-canvas");
 
-                if (gSettings.disablegpu == "1")
+                if (gSettings.disablegpu)
                     settings.CefCommandLineArgs.Add("disable-gpu");
 
-                if (gSettings.disablewebgl == "1")
+                if (gSettings.disablewebgl)
                     settings.CefCommandLineArgs.Add("disable-webgl");
 
 
-                if (gSettings.enableWebRTC == "1")
+                if (gSettings.enableWebRTC)
                     settings.CefCommandLineArgs.Add("enable-media-stream", "1");
 
                 //test @
@@ -88,7 +89,7 @@ namespace mailbox_desktop
                 //Initialize
                 Cef.Initialize(settings);
 
-                chrome = new ChromiumWebBrowser(url);
+                chrome = new ChromiumWebBrowser(w.url);
                 chrome.DownloadHandler = new DownloadHandler();
                 chrome.MenuHandler = new CustomMenuHandler();
             }
@@ -97,10 +98,10 @@ namespace mailbox_desktop
                 //  https://github.com/cefsharp/CefSharp/wiki/General-Usage#request-context-browser-isolation
 
                 var requestContextSettings = new RequestContextSettings();
-                requestContextSettings.CachePath = cache_dir;
+                requestContextSettings.CachePath = cache_dir_local;
                 requestContextSettings.PersistSessionCookies = true;
 
-                chrome = new ChromiumWebBrowser(url);
+                chrome = new ChromiumWebBrowser(w.url);
                 chrome.DownloadHandler = new DownloadHandler();
                 chrome.MenuHandler = new CustomMenuHandler();
                 chrome.RequestContext = new RequestContext(requestContextSettings);

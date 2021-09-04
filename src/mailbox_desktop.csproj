@@ -82,16 +82,43 @@
     <Compile Include="frmCookies.Designer.cs">
       <DependentUpon>frmCookies.cs</DependentUpon>
     </Compile>
+    <Compile Include="frmSettings.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettings.Designer.cs">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettingsGeneral.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettingsGeneral.Designer.cs">
+      <DependentUpon>frmSettingsGeneral.cs</DependentUpon>
+    </Compile>
+    <Compile Include="frmSettingsWebsites.cs">
+      <SubType>Form</SubType>
+    </Compile>
+    <Compile Include="frmSettingsWebsites.Designer.cs">
+      <DependentUpon>frmSettingsWebsites.cs</DependentUpon>
+    </Compile>
     <Compile Include="General.cs" />
-    <Compile Include="iniParser.cs" />
     <Compile Include="Program.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="SingleExecution.cs" />
+    <Compile Include="XmlHelper.cs" />
     <EmbeddedResource Include="Form1.resx">
       <DependentUpon>Form1.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="frmCookies.resx">
       <DependentUpon>frmCookies.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettings.resx">
+      <DependentUpon>frmSettings.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettingsGeneral.resx">
+      <DependentUpon>frmSettingsGeneral.cs</DependentUpon>
+    </EmbeddedResource>
+    <EmbeddedResource Include="frmSettingsWebsites.resx">
+      <DependentUpon>frmSettingsWebsites.cs</DependentUpon>
     </EmbeddedResource>
     <EmbeddedResource Include="Properties\Resources.resx">
       <Generator>ResXFileCodeGenerator</Generator>

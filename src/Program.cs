@@ -1,4 +1,6 @@
 ﻿using System;
+using System.Collections.Generic;
+using System.IO;
 using System.Threading;
 using System.Windows.Forms;
 
@@ -13,9 +15,11 @@ namespace mailbox_desktop
         [STAThread]
         static void Main()
         {
-
             if (mutex.WaitOne(TimeSpan.Zero, true))
             {
+
+                General.configPath = Application.StartupPath + @"\config.xml";
+
                 Application.EnableVisualStyles();
                 Application.SetCompatibleTextRenderingDefault(false);
 
@@ -24,12 +28,25 @@ namespace mailbox_desktop
                 AppDomain.CurrentDomain.UnhandledException += new UnhandledExceptionEventHandler(CurrentDomain_UnhandledException);
                 //
 
-                Application.Run(new Form1());
+                if (!File.Exists(General.configPath))
+                {
+                    frmSettings x = new frmSettings(true);
+
+                    x.ShowDialog();
+
+                    Application.Run(new Form1());
+                }
+                else
+                {
+                    General.cfg = XmlHelper.FromXmlFile<ConfigApp>(General.configPath);
+                    Application.Run(new Form1());
+                }
             }
             else
             {
                 SingleExecution.SwitchToCurrentInstance();
             }
+
 
         }
 

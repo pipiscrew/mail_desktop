@@ -98,9 +98,7 @@ namespace mailbox_desktop
         {
             ToolStripMenuItem ts = null;
 
-            iniParser parser = new iniParser(Application.StartupPath + "\\settings.ini");
-
-            string exclusions = parser.GetSetting("cookies", "exclude");
+            string exclusions = General.cfg.g.cookies;
 
             if (exclusions == null)
             {

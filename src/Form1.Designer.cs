@@ -49,6 +49,7 @@
             this.toolStripOpen = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem7 = new System.Windows.Forms.ToolStripMenuItem();
             this.toolStripMenuItem4 = new System.Windows.Forms.ToolStripMenuItem();
+            this.toolStripSettings = new System.Windows.Forms.ToolStripMenuItem();
             this.trayContext.SuspendLayout();
             this.contextTab.SuspendLayout();
             this.SuspendLayout();
@@ -77,9 +78,10 @@
             this.toolStripMenuItem3,
             this.toolStripRestart,
             this.toolStripSeparator1,
+            this.toolStripSettings,
             this.toolStripMenuItem2});
             this.trayContext.Name = "trayContext";
-            this.trayContext.Size = new System.Drawing.Size(134, 98);
+            this.trayContext.Size = new System.Drawing.Size(153, 142);
             // 
             // toolStripMenuItem1
             // 
@@ -128,7 +130,7 @@
             this.toolStripMenuItem7,
             this.toolStripMenuItem4});
             this.contextTab.Name = "contextTab";
-            this.contextTab.Size = new System.Drawing.Size(162, 236);
+            this.contextTab.Size = new System.Drawing.Size(162, 214);
             // 
             // toolStripOpenInContainer
             // 
@@ -210,6 +212,13 @@
             this.toolStripMenuItem4.Text = "close tab";
             this.toolStripMenuItem4.Click += new System.EventHandler(this.toolStripMenuItem4_Click);
             // 
+            // toolStripSettings
+            // 
+            this.toolStripSettings.Name = "toolStripSettings";
+            this.toolStripSettings.Size = new System.Drawing.Size(152, 22);
+            this.toolStripSettings.Text = "settings";
+            this.toolStripSettings.Click += new System.EventHandler(this.toolStripSettings_Click);
+            // 
             // Form1
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(6F, 13F);
@@ -252,6 +261,7 @@
         private System.Windows.Forms.ToolStripMenuItem toolStripOpenInContainer;
         private System.Windows.Forms.ToolStripMenuItem toolStripOpenInGlobal;
         private System.Windows.Forms.ToolStripSeparator toolStripSeparator3;
+        private System.Windows.Forms.ToolStripMenuItem toolStripSettings;
     }
 }
 
