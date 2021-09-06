@@ -1,10 +1,10 @@
 ﻿using System;
-using System.Drawing;
-using System.Windows.Forms;
-using System.IO;
-using System.Runtime.InteropServices;
 using System.Collections.Generic;
+using System.Drawing;
+using System.IO;
 using System.Linq;
+using System.Runtime.InteropServices;
+using System.Windows.Forms;
 
 namespace mailbox_desktop
 {
@@ -52,6 +52,7 @@ namespace mailbox_desktop
         {
             InitializeComponent();
 
+            trayIcon.Text = "PipisCrew mail desktop";
             trayIcon.Icon = mailbox_desktop.Properties.Resources.gmail_blue;
         }
 

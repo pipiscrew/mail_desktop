@@ -1,18 +1,14 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
 using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace mailbox_desktop
 {
     public partial class frmSettingsWebsites : Form
     {
+        public event EventHandler<bool> IsDirty; 
+
         public frmSettingsWebsites()
         {
             InitializeComponent();
@@ -39,6 +35,7 @@ namespace mailbox_desktop
             //if is coming from save
             if (!string.IsNullOrEmpty(prev))
                 lst.SelectedIndex = lst.FindStringExact(prev);
+
         }
 
         private void lst_SelectedIndexChanged(object sender, EventArgs e)
@@ -139,7 +136,8 @@ namespace mailbox_desktop
             {
                 //WARN - duplication is not prevented
 
-                WebsiteDetail x = (WebsiteDetail)lst.SelectedItem;
+                WebsiteDetail x = General.cfg.wList.Where(y => y.title.Equals((lst.SelectedItem as WebsiteDetail).title)).FirstOrDefault();
+
                 x.cookiesJar = txtCookieJarName.Text;
                 x.noAtStartup = chkDontShowStartup.Checked;
                 x.notificationIcon = txtNotifIconFilename.Text;
@@ -147,12 +145,16 @@ namespace mailbox_desktop
                 x.notificationShowWindow = chkNotifShowWindow.Checked;
                 x.title = txtTabTitle.Text;
                 x.url = txtWebsite.Text;
+
             }
 
             //save
             XmlHelper.ToXmlFile(General.cfg, General.configPath);
 
-            //
+         
+            //signalize parent form 
+            SetIsDirty();
+
             lst.Enabled = true;
             btnAddnew.Text = "add new";
 
@@ -178,6 +180,12 @@ namespace mailbox_desktop
             txtTabTitle.Text = string.Empty;
 
             FillList();
+        }
+
+        private void SetIsDirty()
+        {
+            if (IsDirty!=null) 
+                IsDirty.Invoke(this, true);
         }
 
     }

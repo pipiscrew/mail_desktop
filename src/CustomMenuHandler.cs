@@ -49,7 +49,7 @@ namespace mailbox_desktop
             //    browser.GetHost().ShowDevTools();
             //    return true;
             //}
-            if (commandId == (CefMenuCommand)26501)
+            if (commandId == (CefMenuCommand)26501) //Export as PDF
             {
                 string filepath = AppDomain.CurrentDomain.BaseDirectory + DateTime.Now.ToString("yyyyMMddHHmmss") + ".pdf";
                 //ChromiumWebBrowser current_browser = (ChromiumWebBrowser)browserControl;
@@ -59,7 +59,7 @@ namespace mailbox_desktop
                 return true;
             }
 
-            if (commandId == (CefMenuCommand)26504)
+            if (commandId == (CefMenuCommand)26504) //Copy link address
             {
                 string url = clean_url(parameters.LinkUrl);
 
@@ -68,6 +68,7 @@ namespace mailbox_desktop
             }
 
             // React to the second ID (show dev tools method)
+            //                  Open in new tab w/ cookies --                   Open in new tab --          Open in default browser
             if (commandId == (CefMenuCommand)26502 || commandId == (CefMenuCommand)26503 || commandId == (CefMenuCommand)26505)
             {
                 if (!string.IsNullOrEmpty(parameters.LinkUrl) && parameters.LinkUrl.StartsWith("http", StringComparison.OrdinalIgnoreCase))

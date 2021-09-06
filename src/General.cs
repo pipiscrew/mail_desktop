@@ -5,8 +5,6 @@ using System.Windows.Forms;
 
 namespace mailbox_desktop
 {
-   
-
     public static class General
     {
         public static ConfigApp cfg;

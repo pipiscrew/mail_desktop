@@ -39,7 +39,6 @@
             this.txtAgent = new System.Windows.Forms.TextBox();
             this.label1 = new System.Windows.Forms.Label();
             this.btnSave = new System.Windows.Forms.Button();
-            this.btnCancel = new System.Windows.Forms.Button();
             this.toolTip2 = new System.Windows.Forms.ToolTip(this.components);
             this.label3 = new System.Windows.Forms.Label();
             this.label4 = new System.Windows.Forms.Label();
@@ -149,17 +148,6 @@
             this.btnSave.UseVisualStyleBackColor = true;
             this.btnSave.Click += new System.EventHandler(this.btnSave_Click);
             // 
-            // btnCancel
-            // 
-            this.btnCancel.Location = new System.Drawing.Point(12, 356);
-            this.btnCancel.Name = "btnCancel";
-            this.btnCancel.Size = new System.Drawing.Size(75, 23);
-            this.btnCancel.TabIndex = 11;
-            this.btnCancel.Text = "cancel";
-            this.btnCancel.UseVisualStyleBackColor = true;
-            this.btnCancel.Visible = false;
-            this.btnCancel.Click += new System.EventHandler(this.btnCancel_Click);
-            // 
             // toolTip2
             // 
             this.toolTip2.AutomaticDelay = 10000;
@@ -171,44 +159,44 @@
             // label3
             // 
             this.label3.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label3.Location = new System.Drawing.Point(241, 38);
+            this.label3.Location = new System.Drawing.Point(192, 38);
             this.label3.Name = "label3";
-            this.label3.Size = new System.Drawing.Size(148, 18);
+            this.label3.Size = new System.Drawing.Size(197, 18);
             this.label3.TabIndex = 12;
-            this.label3.Text = "fingerprint, disable";
+            this.label3.Text = "fingerprint, better disable";
             this.toolTip2.SetToolTip(this.label3, "is a type of online tracking that\'s more invasive than ordinary cookie-based trac" +
         "king");
             // 
             // label4
             // 
             this.label4.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label4.Location = new System.Drawing.Point(241, 63);
+            this.label4.Location = new System.Drawing.Point(192, 63);
             this.label4.Name = "label4";
-            this.label4.Size = new System.Drawing.Size(148, 18);
+            this.label4.Size = new System.Drawing.Size(197, 18);
             this.label4.TabIndex = 13;
-            this.label4.Text = "fingerprint, disable";
+            this.label4.Text = "fingerprint, better disable";
             this.toolTip2.SetToolTip(this.label4, "is a type of online tracking that\'s more invasive than ordinary cookie-based trac" +
         "king");
             // 
             // label5
             // 
             this.label5.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label5.Location = new System.Drawing.Point(241, 115);
+            this.label5.Location = new System.Drawing.Point(192, 115);
             this.label5.Name = "label5";
-            this.label5.Size = new System.Drawing.Size(148, 17);
+            this.label5.Size = new System.Drawing.Size(197, 17);
             this.label5.TabIndex = 15;
-            this.label5.Text = "fingerprint, disable";
+            this.label5.Text = "fingerprint, better disable";
             this.toolTip2.SetToolTip(this.label5, "is a type of online tracking that\'s more invasive than ordinary cookie-based trac" +
         "king");
             // 
             // label6
             // 
             this.label6.ForeColor = System.Drawing.Color.FromArgb(((int)(((byte)(192)))), ((int)(((byte)(0)))), ((int)(((byte)(0)))));
-            this.label6.Location = new System.Drawing.Point(241, 90);
+            this.label6.Location = new System.Drawing.Point(192, 90);
             this.label6.Name = "label6";
-            this.label6.Size = new System.Drawing.Size(148, 16);
+            this.label6.Size = new System.Drawing.Size(197, 16);
             this.label6.TabIndex = 14;
-            this.label6.Text = "fingerprint, disable";
+            this.label6.Text = "fingerprint, better disable";
             this.toolTip2.SetToolTip(this.label6, "is a type of online tracking that\'s more invasive than ordinary cookie-based trac" +
         "king");
             // 
@@ -233,14 +221,13 @@
             // 
             this.AutoScaleDimensions = new System.Drawing.SizeF(7F, 15F);
             this.AutoScaleMode = System.Windows.Forms.AutoScaleMode.Font;
-            this.ClientSize = new System.Drawing.Size(421, 387);
+            this.ClientSize = new System.Drawing.Size(428, 387);
             this.Controls.Add(this.txtCookies);
             this.Controls.Add(this.label7);
             this.Controls.Add(this.label5);
             this.Controls.Add(this.label6);
             this.Controls.Add(this.label4);
             this.Controls.Add(this.label3);
-            this.Controls.Add(this.btnCancel);
             this.Controls.Add(this.btnSave);
             this.Controls.Add(this.txtAgent);
             this.Controls.Add(this.label1);
@@ -272,7 +259,6 @@
         private System.Windows.Forms.TextBox txtAgent;
         private System.Windows.Forms.Label label1;
         private System.Windows.Forms.Button btnSave;
-        private System.Windows.Forms.Button btnCancel;
         private System.Windows.Forms.ToolTip toolTip2;
         private System.Windows.Forms.Label label3;
         private System.Windows.Forms.Label label4;

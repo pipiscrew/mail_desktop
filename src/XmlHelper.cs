@@ -4,7 +4,6 @@ using System.Text;
 using System.Xml;
 using System.Xml.Serialization;
 
-
 namespace mailbox_desktop
 {
     public static class XmlHelper

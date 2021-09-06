@@ -1,32 +1,33 @@
 ﻿using System;
-using System.Collections.Generic;
-using System.ComponentModel;
-using System.Data;
-using System.Drawing;
 using System.IO;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
 using System.Windows.Forms;
 
 namespace mailbox_desktop
 {
     public partial class frmSettingsGeneral : Form
     {
-                internal bool isNew; 
-        public frmSettingsGeneral(        bool isNew )
+        public event EventHandler<bool> IsDirty;
+
+        internal bool isNew;
+        public frmSettingsGeneral(bool isNew)
         {
             InitializeComponent();
 
             this.isNew = isNew;
 
-            if (File.Exists(General.configPath))                
+            if (isNew)
+            {
+                chkProxy.Checked = chkGPU.Checked = chkCanvas.Checked = chkWebGL.Checked = true;
+                txtCookies.Text = "google;messenger;linkedin";
+            }
+
+            if (File.Exists(General.configPath))
                 Fill();
         }
 
         internal void Fill()
         {
-            //read the config file - dont use the var
+            //read the config file
             General.cfg = XmlHelper.FromXmlFile<ConfigApp>(General.configPath);
 
             chkProxy.Checked = General.cfg.g.noproxyserver.ToBool();
@@ -40,14 +41,9 @@ namespace mailbox_desktop
 
         }
 
-        private void btnCancel_Click(object sender, EventArgs e)
-        {
-            //this.DialogResult = System.Windows.Forms.DialogResult.Cancel;
-        }
-
         private void btnSave_Click(object sender, EventArgs e)
         {
-            if (  General.cfg==null)
+            if (General.cfg == null)
                 General.cfg = new ConfigApp();
 
             General.cfg.g = new GeneralSettings()
@@ -65,14 +61,15 @@ namespace mailbox_desktop
             //save
             XmlHelper.ToXmlFile(General.cfg, General.configPath);
 
-            //if (this.isNew)
-            //{
-            //    MessageBox.Show("Application now will restart, please right click on tray icon and set the websites you want to have", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
-
-            //    Application.Restart();
-            //}
-            //else
-                this.Parent.Parent.Parent.Dispose();
+            if (!this.isNew)
+            {
+                IsDirty.Invoke(this, true);
+            }
+            else
+            {
+                MessageBox.Show("Please proceed at tray icon icon, right click it, select 'settings' and set the needed websites. Keep in mind on any setting change application restart required.", Application.ProductName, MessageBoxButtons.OK, MessageBoxIcon.Information);
+                this.Parent.Parent.Parent.Dispose(); //close parent form
+            }
         }
 
 

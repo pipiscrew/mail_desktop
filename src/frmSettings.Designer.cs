@@ -74,6 +74,7 @@
             this.Name = "frmSettings";
             this.StartPosition = System.Windows.Forms.FormStartPosition.CenterScreen;
             this.Text = "Settings";
+            this.FormClosed += new System.Windows.Forms.FormClosedEventHandler(this.frmSettings_FormClosed);
             this.tab.ResumeLayout(false);
             this.ResumeLayout(false);
 
