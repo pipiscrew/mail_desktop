@@ -5,7 +5,7 @@
 
 Today I’m thinking, why not creating a tabbed application that is isolated from any other website (each tab has its own cookies) and keep there all the mails / messengers (?).. of course you can use a second browser for that but you have to check it, plus is not providing tab isolation.. This application stays at tray, upon mail and what user advised as notification_keyword, getting an icon/sound alert… Inspired by [Kiwi for Gmail](https://www.kiwiforgmail.com/).
 
-The application is for **advanced users** as the settings have to described on the **settings.ini** file.
+For gmail login, for one time, user has to set the **agent alternative** then after success login, restore it to **agent chrome**.
 
 With the help of the [CefSharp](https://github.com/cefsharp/CefSharp/) library common known as .NET bindings for the Chromium Embedded Framework.
 
@@ -15,17 +15,19 @@ With the help of the [CefSharp](https://github.com/cefsharp/CefSharp/) library c
 
 <br>
 
-Read the included PDF for details, user has to **dowload manually** the dependencies from the following **nuget links** : <br>
-[cef.redist.x64](https://www.nuget.org/packages/cef.redist.x64/79.1.36)<br> 
-[CefSharp.Common](https://www.nuget.org/packages/CefSharp.Common/79.1.360)<br> 
-[CefSharp.WinForms](https://www.nuget.org/packages/CefSharp.WinForms/79.1.360)<br> 
+Read the included PDF for details, user has to **dowload manually** the dependencies from the following **nuget links** :   
+[cef.redist.x64](https://www.nuget.org/packages/cef.redist.x64/79.1.36)   
+[CefSharp.Common](https://www.nuget.org/packages/CefSharp.Common/79.1.360)  
+[CefSharp.WinForms](https://www.nuget.org/packages/CefSharp.WinForms/79.1.360)  
 
+&nbsp;
 
-## This project uses the following 3rd-party dependencies :<br>
--[Cefsharp](https://github.com/cefsharp/CefSharp)<br>
--[VC++ 2015](https://www.microsoft.com/en-us/download/details.aspx?id=52685)
-<br>
+## This project uses the following 3rd-party dependencies :  
+-[Cefsharp](https://github.com/cefsharp/CefSharp)  
+-[VC++ 2015](https://www.microsoft.com/en-us/download/details.aspx?id=52685)  
+
+&nbsp;
 ## This project is no longer maintained
-Copyright (c) 2020 [PipisCrew](http://pipiscrew.com)
+Copyright (c) 2021 [PipisCrew](http://pipiscrew.com)
 
 Licensed under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
