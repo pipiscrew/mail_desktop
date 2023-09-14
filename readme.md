@@ -28,6 +28,8 @@ Read the included PDF for details, user has to **dowload manually** the dependen
 
 &nbsp;
 ## This project is no longer maintained
-Copyright (c) 2021 [PipisCrew](http://pipiscrew.com)
+Copyright (c) 2021 [PipisCrew](http://pipiscrew.com)  
 
 Licensed under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
+
+# GMail stop working as August 2023, not supported browser
