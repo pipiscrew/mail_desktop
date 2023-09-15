@@ -3,7 +3,7 @@
 
 # mail_desktop - keep privacy to mails & messengers
 
-Today I’m thinking, why not creating a tabbed application that is isolated from any other website (each tab has its own cookies) and keep there all the mails / messengers (?).. of course you can use a second browser for that but you have to check it, plus is not providing tab isolation.. This application stays at tray, upon mail and what user advised as notification_keyword, getting an icon/sound alert… Inspired by [Kiwi for Gmail](https://www.kiwiforgmail.com/) (Kiwi 28/09/2023 turned to Electron).
+Today I’m thinking, why not creating a tabbed application that is isolated from any other website (each tab has its own cookies) and keep there all the mails / messengers (?).. of course you can use a second browser for that but you have to check it, plus is not providing tab isolation.. This application stays at tray, upon mail and what user advised as notification_keyword, getting an icon/sound alert… Inspired by [Kiwi for Gmail](https://www.kiwiforgmail.com/) (Kiwi 28/08/2023 turn to Electron).
 
 For gmail login, for one time, user has to set the **agent alternative** then after success login, restore it to **agent chrome**.
 
