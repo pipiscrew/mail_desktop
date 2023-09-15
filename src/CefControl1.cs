@@ -63,6 +63,10 @@ namespace mailbox_desktop
                 settings.CachePath = cache_dir_local;
                 settings.PersistSessionCookies = true;
 
+                //SpellCheck -- https://bitbucket.org/chromiumembedded/cef/pull-requests/415
+				//not working for now
+                //settings.CefCommandLineArgs.Add("-disable-features", "WinUseBrowserSpellChecker"); //"disable-features", "CalculateNativeWinOcclusion,WinUseBrowserSpellChecker");
+
                 //fake GPU details - https://stackoverflow.com/questions/55955203/how-to-give-fake-gpu-info-to-site
                 //test with https://browserleaks.com/canvas
                 if (gSettings.noproxyserver)

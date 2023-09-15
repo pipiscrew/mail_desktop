@@ -30,5 +30,10 @@ namespace CefSharp.Handlers
             if (OnDownloadUpdatedFired != null)
                 OnDownloadUpdatedFired.Invoke(this, downloadItem);
         }
+
+        public bool CanDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, string url, string requestMethod)
+        {
+            return true;
+        }
     }
 }

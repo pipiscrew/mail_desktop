@@ -46,7 +46,7 @@ namespace mailbox_desktop
         #endregion
 
         //Firefox
-        internal string agent_alternative = "Mozilla/5.0 (Windows NT 10.0; Win64; x64; rv:68.0) Gecko/20100101 Firefox/68.0";
+        internal string agent_alternative = "Mozilla/5.0 (Windows NT 10.0; WOW64; rv:102.0) Gecko/20100101 Goanna/6.3 Firefox/102.0 Basilisk/20230913";
 
         public Form1()
         {

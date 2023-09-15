@@ -84,9 +84,9 @@
             this.label2.AutoSize = true;
             this.label2.Location = new System.Drawing.Point(12, 158);
             this.label2.Name = "label2";
-            this.label2.Size = new System.Drawing.Size(133, 15);
+            this.label2.Size = new System.Drawing.Size(238, 15);
             this.label2.TabIndex = 4;
-            this.label2.Text = "external browser :";
+            this.label2.Text = "(not required) external browser :";
             // 
             // chkCanvas
             // 
@@ -134,9 +134,9 @@
             this.label1.AutoSize = true;
             this.label1.Location = new System.Drawing.Point(12, 221);
             this.label1.Name = "label1";
-            this.label1.Size = new System.Drawing.Size(112, 15);
+            this.label1.Size = new System.Drawing.Size(217, 15);
             this.label1.TabIndex = 9;
-            this.label1.Text = "browser agent :";
+            this.label1.Text = "(not required) browser agent :";
             // 
             // btnSave
             // 
@@ -213,9 +213,9 @@
             this.label7.AutoSize = true;
             this.label7.Location = new System.Drawing.Point(12, 285);
             this.label7.Name = "label7";
-            this.label7.Size = new System.Drawing.Size(308, 15);
+            this.label7.Size = new System.Drawing.Size(413, 15);
             this.label7.TabIndex = 17;
-            this.label7.Text = "cookies exclude (separate with semicolon) :";
+            this.label7.Text = "(not required) cookies exclude (separate with semicolon) :";
             // 
             // frmSettingsGeneral
             // 
