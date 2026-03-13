@@ -21,7 +21,7 @@ Read the included PDF for details, user has to **download manually** the depende
 * [chromiumembeddedframework.runtime.win-x64](https://www.nuget.org/packages/chromiumembeddedframework.runtime.win-x64/)   
 * [CefSharp.Common](https://www.nuget.org/packages/CefSharp.Common/145.0.260)  
 * [CefSharp.WinForms](https://www.nuget.org/packages/CefSharp.WinForms/145.0.260)  
-* [CefSharp source](https://github.com/cefsharp/CefSharp/releases/tag/v145.0.260) - no needed, left fo reference  
+* [CefSharp source](https://github.com/cefsharp/CefSharp/releases/tag/v145.0.260) - no needed, left for reference  
 
 &nbsp;
 
