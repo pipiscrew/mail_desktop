@@ -55,7 +55,7 @@ namespace mailbox_desktop
 
             Directory.CreateDirectory(cache_dir_local);
 
-            if (!Cef.IsInitialized)
+            if (!Cef.IsInitialized.GetValueOrDefault())
             {
                 CefSettings settings = new CefSettings();
                 settings.UserAgent = gSettings.agent;

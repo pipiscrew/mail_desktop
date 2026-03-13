@@ -11,7 +11,12 @@ namespace CefSharp.Handlers
 
         public event EventHandler<DownloadItem> OnDownloadUpdatedFired;
 
-        public void OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback)
+        public bool CanDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, string url, string requestMethod)
+        {
+            return true;
+        }
+
+        public bool OnBeforeDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IBeforeDownloadCallback callback)
         {
             if (OnBeforeDownloadFired != null)
                 OnBeforeDownloadFired.Invoke(this, downloadItem);
@@ -23,17 +28,14 @@ namespace CefSharp.Handlers
                     callback.Continue(downloadItem.SuggestedFileName, showDialog: true);
                 }
             }
+
+            return true;
         }
 
         public void OnDownloadUpdated(IWebBrowser chromiumWebBrowser, IBrowser browser, DownloadItem downloadItem, IDownloadItemCallback callback)
         {
             if (OnDownloadUpdatedFired != null)
                 OnDownloadUpdatedFired.Invoke(this, downloadItem);
-        }
-
-        public bool CanDownload(IWebBrowser chromiumWebBrowser, IBrowser browser, string url, string requestMethod)
-        {
-            return true;
         }
     }
 }
