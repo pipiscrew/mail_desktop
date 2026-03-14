@@ -17,7 +17,8 @@ With the help of the [CefSharp](https://github.com/cefsharp/CefSharp/) library c
 
 <br>
 
-> known issue :  when a user has only **one tab** open, a **second tab** must be opened for cookies from the **first tab** to be stored.  
+> [!CAUTION]
+> if you download the v0.9.7.4 replace it immediately with v0.9.7.5 as does not provide tab isolation.
 
 --- 
 
