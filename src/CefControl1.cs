@@ -29,7 +29,7 @@ namespace mailbox_desktop
         private string notification_keyword = null;
         private string icon_filepath = null;
         private int tabindex = -1;
-        private bool notification_show_window =false;
+        private bool notification_show_window = false;
 
         private string cache_dir;
         private string externalbrowser;
@@ -60,11 +60,11 @@ namespace mailbox_desktop
                 CefSettings settings = new CefSettings();
                 settings.UserAgent = gSettings.agent;
                 settings.RootCachePath = Application.StartupPath + "\\cache\\";
-                settings.CachePath = cache_dir_local;
+                //settings.CachePath = cache_dir_local;
                 settings.PersistSessionCookies = true;
 
                 //SpellCheck -- https://bitbucket.org/chromiumembedded/cef/pull-requests/415
-				//not working for now
+                //not working for now
                 //settings.CefCommandLineArgs.Add("-disable-features", "WinUseBrowserSpellChecker"); //"disable-features", "CalculateNativeWinOcclusion,WinUseBrowserSpellChecker");
 
                 //fake GPU details - https://stackoverflow.com/questions/55955203/how-to-give-fake-gpu-info-to-site
@@ -93,23 +93,24 @@ namespace mailbox_desktop
                 //Initialize
                 Cef.Initialize(settings);
 
-                chrome = new ChromiumWebBrowser(w.url);
-                chrome.DownloadHandler = new DownloadHandler();
-                chrome.MenuHandler = new CustomMenuHandler();
+                //    chrome = new ChromiumWebBrowser(w.url);
+                //    chrome.DownloadHandler = new DownloadHandler();
+                //    chrome.MenuHandler = new CustomMenuHandler();
+                //}
+                //else
             }
-            else
-            {
-                //  https://github.com/cefsharp/CefSharp/wiki/General-Usage#request-context-browser-isolation
 
-                var requestContextSettings = new RequestContextSettings();
-                requestContextSettings.CachePath = cache_dir_local;
-                requestContextSettings.PersistSessionCookies = true;
+            //  https://github.com/cefsharp/CefSharp/wiki/General-Usage#request-context-browser-isolation
 
-                chrome = new ChromiumWebBrowser(w.url);
-                chrome.DownloadHandler = new DownloadHandler();
-                chrome.MenuHandler = new CustomMenuHandler();
-                chrome.RequestContext = new RequestContext(requestContextSettings);
-            }
+            var requestContextSettings = new RequestContextSettings();
+            requestContextSettings.CachePath = cache_dir_local;
+            requestContextSettings.PersistSessionCookies = true;
+
+            chrome = new ChromiumWebBrowser(w.url);
+            chrome.DownloadHandler = new DownloadHandler();
+            chrome.MenuHandler = new CustomMenuHandler();
+            chrome.RequestContext = new RequestContext(requestContextSettings);
+
 
             this.Controls.Add(chrome);
 
