@@ -17,21 +17,22 @@ With the help of the [CefSharp](https://github.com/cefsharp/CefSharp/) library c
 
 <br>
 
-Read the included PDF for details, user has to **download manually** the dependencies from the following **nuget links** :   
+> known issue :  when a user has only **one tab** open, a **second tab** must be opened for cookies from the **first tab** to be stored.  
+
+--- 
+
+Read the included PDF for details, nuget used :   
 * [chromiumembeddedframework.runtime.win-x64](https://www.nuget.org/packages/chromiumembeddedframework.runtime.win-x64/)   
 * [CefSharp.Common](https://www.nuget.org/packages/CefSharp.Common/145.0.260)  
 * [CefSharp.WinForms](https://www.nuget.org/packages/CefSharp.WinForms/145.0.260)  
 * [CefSharp source](https://github.com/cefsharp/CefSharp/releases/tag/v145.0.260) - no needed, left for reference  
 
-&nbsp;
-
 ## This project uses the following 3rd-party dependencies :  
 * [Cefsharp](https://github.com/cefsharp/CefSharp) - ( [howto](https://github.com/cefsharp/CefSharp/wiki/Quick-Start) )
 * [VC++ 2022](https://docs.microsoft.com/en-us/cpp/windows/latest-supported-vc-redist?view=msvc-170#visual-studio-2015-2017-2019-and-2022)  
 
-&nbsp;
 ## This project is no longer maintained
-Copyright (c) 2021 [PipisCrew](http://pipiscrew.com)  
+Copyright (c) 2026 [PipisCrew](http://pipiscrew.com)  
 
 Licensed under the [MIT license](http://www.opensource.org/licenses/mit-license.php).
 
